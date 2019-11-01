@@ -261,14 +261,17 @@ const Radar = function (size, radar) {
       circle(blip, x, y, order, group)
     }
 
-    group.append('text')
-      .attr('x', x)
-      .attr('y', y)
-      .attr('class', 'blip-text')
-      // derive font-size from current blip width
-      .style('font-size', ((blip.width * 10) / 22) + 'px')
-      .attr('text-anchor', 'middle')
-      .text(blip.name())
+    // Only add blip text if no icon was specified
+    if (!blip.iconUrl()) {
+      group.append('text')
+        .attr('x', x)
+        .attr('y', y)
+        .attr('class', 'blip-text')
+        // derive font-size from current blip width
+        .style('font-size', ((blip.width * 10) / 22) + 'px')
+        .attr('text-anchor', 'middle')
+        .text(blip.number())
+    }
 
     var blipListItem = ringList.append('li')
     var blipText = blip.number() + '. ' + blip.name() + (blip.topic() ? ('. - ' + blip.topic()) : '')
