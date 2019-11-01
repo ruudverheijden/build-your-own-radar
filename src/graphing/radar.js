@@ -124,6 +124,21 @@ const Radar = function (size, radar) {
       .attr('class', order)
   }
 
+  function icon (blip, x, y, order, group) {
+    const iconWidth = blip.width * 2
+    const img = new Image()
+    img.src = blip.iconUrl()
+    img.onload = function () {
+      (group || svg).append('svg:image')
+        .attr('width', iconWidth)
+        .attr('height', iconWidth * this.height / this.width)
+        .attr('x', x - iconWidth / 2)
+        .attr('y', y - iconWidth * this.height / this.width / 2)
+        .attr('xlink:href', blip.iconUrl())
+        .attr('class', order)
+    }
+  }
+
   function circleLegend (x, y, group) {
     return (group || svg).append('path')
       .attr('d', 'M420.084,282.092c-1.073,0-2.16,0.103-3.243,0.313c-6.912,1.345-13.188,8.587-11.423,16.874c1.732,8.141,8.632,13.711,17.806,13.711c0.025,0,0.052,0,0.074-0.003c0.551-0.025,1.395-0.011,2.225-0.109c4.404-0.534,8.148-2.218,10.069-6.487c1.747-3.886,2.114-7.993,0.913-12.118C434.379,286.944,427.494,282.092,420.084,282.092')
@@ -238,7 +253,9 @@ const Radar = function (size, radar) {
 
     var group = quadrantGroup.append('g').attr('class', 'blip-link').attr('id', 'blip-link-' + blip.number())
 
-    if (blip.isNew()) {
+    if (blip.iconUrl()) {
+      icon(blip, x, y, order, group, this.width, this.height)
+    } else if (blip.isNew()) {
       triangle(blip, x, y, order, group)
     } else {
       circle(blip, x, y, order, group)
@@ -246,12 +263,12 @@ const Radar = function (size, radar) {
 
     group.append('text')
       .attr('x', x)
-      .attr('y', y + 4)
+      .attr('y', y)
       .attr('class', 'blip-text')
       // derive font-size from current blip width
       .style('font-size', ((blip.width * 10) / 22) + 'px')
       .attr('text-anchor', 'middle')
-      .text(blip.number())
+      .text(blip.name())
 
     var blipListItem = ringList.append('li')
     var blipText = blip.number() + '. ' + blip.name() + (blip.topic() ? ('. - ' + blip.topic()) : '')
