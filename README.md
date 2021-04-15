@@ -13,7 +13,7 @@ A library that generates an interactive radar, inspired by [thoughtworks.com/rad
 
 ## Demo
 
-You can see this in action at https://radar.thoughtworks.com. If you plug in [this data](https://docs.google.com/spreadsheets/d/1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI/) you'll see [this visualization](https://radar.thoughtworks.com/?sheetId=https://docs.google.com/spreadsheets/d/1YXkrgV7Y6zShiPeyw4Y5_19QOfu5I6CyH5sGnbkEyiI). 
+You can see this in action at https://radar.thoughtworks.com. If you plug in [this data](https://docs.google.com/spreadsheets/d/18A7oDuavlh89rAmqcaXpqle8QLqIvlAkoEUxcObzuUM/edit#gid=1985253373) you'll see [this visualization](https://radar.thoughtworks.com/?sheetId=https%3A%2F%2Fdocs.google.com%2Fspreadsheets%2Fd%2F18A7oDuavlh89rAmqcaXpqle8QLqIvlAkoEUxcObzuUM%2Fedit%23gid%3D1985253373). 
 
 ## How To Use
 
@@ -63,6 +63,7 @@ That's it!
 
 ***Note:*** The quadrants of the radar, and the order of the rings inside the radar will be drawn in the order they appear in your data.
 
+Check [this page](https://www.thoughtworks.com/radar/how-to-byor) for step by step guidance.
 
 ### More complex usage
 
@@ -71,6 +72,20 @@ To create the data representation, you can use the Google Sheet [factory](/src/u
 The app uses [Tabletop.js](https://github.com/jsoma/tabletop) to fetch the data from a Google Sheet or [D3.js](https://d3js.org/) if supplied as CSV, so refer to their documentation for more advanced interaction.  The input data is sanitized by whitelisting HTML tags with [sanitize-html](https://github.com/punkave/sanitize-html).
 
 The application uses [webpack](https://webpack.github.io/) to package dependencies and minify all .js and .scss files.
+
+The application also supports private google sheets. Following flags need to be set for private sheets to work. API key and OAuth Client ID can be obtained from your Google developer console.
+
+
+```
+export ENABLE_GOOGLE_AUTH=true
+export API_KEY=[Google API Key]
+export CLIENT_ID=[Google Client ID]
+```
+
+To enable Google Tag Manager, add the following environment variable.
+```
+export GTM_ID=[GTM ID]
+```
 
 ## Docker Image
 We have released BYOR as a docker image for our users. The image is available in our [DockerHub Repo](https://hub.docker.com/r/wwwthoughtworks/build-your-own-radar/). To pull and run the image, run the following commands.
