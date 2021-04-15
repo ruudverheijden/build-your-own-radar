@@ -125,10 +125,12 @@ const Radar = function (size, radar) {
   }
 
   function icon (blip, x, y, order, group) {
-    const iconWidth = blip.width * 2
     const img = new Image()
     img.src = blip.iconUrl()
     img.onload = function () {
+      const ratio = Math.abs(1 - (this.width / this.height))
+      const iconWidth = blip.width * 1.5 + 10 * ratio;
+
       (group || svg).append('svg:image')
         .attr('width', iconWidth)
         .attr('height', iconWidth * this.height / this.width)
